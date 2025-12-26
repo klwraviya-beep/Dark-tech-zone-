@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTZ | Dark Tech Zone Official</title>
+    <title>DTZ Official | Cyber Team</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --p: #00ffcc;
-            --s: #00d4ff;
-            --bg: #020205;
+            --primary: #00ffcc;
+            --secondary: #00d4ff;
+            --bg-color: #020205;
             --glass: rgba(0, 255, 204, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans Sinhala', sans-serif; cursor: crosshair; }
-        body { background: var(--bg); color: white; overflow: hidden; height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--bg-color); 
+            color: white; 
+            font-family: 'Noto Sans Sinhala', sans-serif; 
+            overflow: hidden; 
+            height: 100vh;
+        }
 
-        /* --- TERMINAL OVERLAY --- */
+        /* --- LOADING/TERMINAL OVERLAY --- */
         #terminal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: black; z-index: 5000; display: none;
@@ -25,37 +32,42 @@
             font-family: 'Share Tech Mono', monospace; padding: 20px;
         }
 
-        .terminal-text { color: var(--p); font-size: 1.1rem; text-align: center; line-height: 1.6; }
+        .terminal-text { color: var(--primary); font-size: 1rem; text-align: left; line-height: 1.8; width: 300px; }
 
         /* --- WELCOME SCREEN --- */
         #welcome-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #0a1414 0%, #020205 100%);
             z-index: 1000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; transition: 1.5s ease-in-out;
+            justify-content: center; align-items: center; transition: 1.2s ease-in-out;
         }
 
         .dev-box {
-            border: 2px solid var(--p); background: var(--glass);
-            padding: 20px 40px; text-align: center; margin-bottom: 30px;
-            box-shadow: 0 0 20px var(--p); border-radius: 10px;
+            border: 2px solid var(--primary); background: var(--glass);
+            padding: 25px 45px; text-align: center; margin-bottom: 30px;
+            box-shadow: 0 0 25px var(--primary); border-radius: 15px;
             animation: pulse 2s infinite alternate;
         }
 
-        .dev-box h3 { font-family: 'Orbitron'; font-size: 1.1rem; letter-spacing: 2px; color: white; margin-bottom: 5px; }
-        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.03); box-shadow: 0 0 40px var(--p); } }
+        .dev-box h3 { font-family: 'Orbitron'; font-size: 1rem; letter-spacing: 2px; color: white; margin-top: 10px; }
+        
+        @keyframes pulse { 
+            from { transform: scale(1); box-shadow: 0 0 20px var(--primary); } 
+            to { transform: scale(1.03); box-shadow: 0 0 50px var(--primary); } 
+        }
 
-        .dtz-title { font-family: 'Orbitron'; font-size: 4.5rem; letter-spacing: 15px; margin-bottom: 10px; }
-        .dtz-title span { color: var(--p); }
+        .dtz-title { font-family: 'Orbitron'; font-size: clamp(3rem, 10vw, 5rem); letter-spacing: 15px; margin-bottom: 10px; }
+        .dtz-title span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
 
         .btn-init {
-            background: transparent; border: 1px solid var(--p);
-            color: var(--p); padding: 15px 45px; font-family: 'Orbitron';
-            font-weight: bold; cursor: pointer; transition: 0.5s; font-size: 1rem;
+            background: transparent; border: 1px solid var(--primary);
+            color: var(--primary); padding: 15px 50px; font-family: 'Orbitron';
+            font-weight: bold; cursor: pointer; transition: 0.5s; font-size: 1.1rem;
+            text-transform: uppercase;
         }
-        .btn-init:hover { background: var(--p); color: black; box-shadow: 0 0 50px var(--p); }
+        .btn-init:hover { background: var(--primary); color: black; box-shadow: 0 0 40px var(--primary); }
 
-        /* --- FORM SECTION --- */
+        /* --- MAIN FORM SECTION --- */
         #main-portal {
             height: 100vh; display: none; justify-content: center; align-items: center;
             opacity: 0; transition: 1s; padding: 20px; overflow-y: auto;
@@ -63,34 +75,35 @@
 
         .form-card {
             width: 100%; max-width: 500px; background: rgba(10, 15, 20, 0.98);
-            border: 1px solid #333; padding: 30px; border-radius: 8px;
-            border-top: 4px solid var(--p); box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            border: 1px solid #333; padding: 35px; border-radius: 12px;
+            border-top: 4px solid var(--primary); box-shadow: 0 0 60px rgba(0,0,0,1);
+            position: relative;
         }
 
-        h2 { font-family: 'Orbitron'; text-align: center; margin-bottom: 20px; color: white; letter-spacing: 3px; font-size: 1.2rem; }
+        h2 { font-family: 'Orbitron'; text-align: center; margin-bottom: 25px; color: white; letter-spacing: 4px; }
 
-        label { display: block; color: var(--p); font-size: 0.85rem; margin: 12px 0 5px; font-weight: bold; }
+        label { display: block; color: var(--primary); font-size: 0.85rem; margin: 15px 0 5px; font-weight: bold; }
+        
         input, select {
-            width: 100%; padding: 12px; background: #000; border: 1px solid #222;
-            color: white; border-left: 3px solid var(--p); margin-bottom: 5px; font-size: 0.9rem;
+            width: 100%; padding: 14px; background: #000; border: 1px solid #222;
+            color: white; border-left: 3px solid var(--primary); margin-bottom: 5px; border-radius: 4px;
         }
 
-        /* 4 Photo Grid */
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
-        .photo-slot { background: #080808; padding: 10px; border: 1px dashed #444; text-align: center; }
-        .photo-slot input { border: none; font-size: 0.7rem; padding: 5px; margin: 0; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .photo-slot { background: #080808; padding: 12px; border: 1px dashed #444; text-align: center; border-radius: 5px; }
+        .photo-slot input { border: none; font-size: 0.7rem; padding: 0; margin: 0; border-left: none; }
 
         .submit-btn {
-            width: 100%; padding: 15px; background: var(--p); border: none;
-            font-family: 'Orbitron'; font-weight: bold; margin-top: 25px; cursor: pointer;
-            color: black; font-size: 1rem; transition: 0.3s;
+            width: 100%; padding: 18px; background: var(--primary); border: none;
+            font-family: 'Orbitron'; font-weight: bold; margin-top: 30px; cursor: pointer;
+            color: black; font-size: 1rem; transition: 0.3s; text-transform: uppercase;
         }
-        .submit-btn:hover { background: white; box-shadow: 0 0 20px white; }
+        .submit-btn:hover { background: white; box-shadow: 0 0 30px white; transform: scale(1.02); }
 
-        .footer { margin-top: 20px; text-align: center; color: #555; font-size: 0.75rem; border-top: 1px solid #222; padding-top: 10px; }
+        .footer { margin-top: 25px; text-align: center; color: #666; font-size: 0.75rem; border-top: 1px solid #222; padding-top: 15px; }
         
-        /* State Classes */
-        .slide-up { transform: translateY(-100%) !important; opacity: 0; }
+        /* Helper Classes */
+        .slide-up { transform: translateY(-100%) !important; opacity: 0; pointer-events: none; }
         .show { display: flex !important; opacity: 1 !important; transform: translateY(0) !important; }
     </style>
 </head>
@@ -102,42 +115,42 @@
 
     <div id="welcome-screen">
         <div class="dev-box">
-            <p style="font-size: 0.7rem; color: var(--p); font-family: 'Orbitron'; margin-bottom: 8px;">CORE DEVELOPERS</p>
+            <p style="font-size: 0.65rem; color: var(--primary); font-family: 'Orbitron';">DEVELOPED BY</p>
             <h3>RAVIYA • SHAGIYA • ASHIYA</h3>
         </div>
         <h1 class="dtz-title">DT<span>Z</span></h1>
-        <button class="btn-init" onclick="runBootSequence()">පද්ධතියට ඇතුල් වන්න</button>
-        <p style="margin-top: 25px; color: #444; font-family: 'Share Tech Mono'; letter-spacing: 2px;">AUTHENTICATING SECURE PORTAL...</p>
+        <button class="btn-init" onclick="runBootSequence()">සම්බන්ධ වන්න</button>
+        <p style="margin-top: 30px; color: #333; font-family: 'Share Tech Mono';">ESTABLISHING ENCRYPTED CONNECTION...</p>
     </div>
 
     <main id="main-portal">
         <div class="form-card">
-            <h2>DTZ RECRUITMENT</h2>
+            <h2>RECRUITMENT</h2>
             <form id="cyberForm">
-                <label>01. සම්පූර්ණ නම (Codename)</label>
+                <label>👤 සම්පූර්ණ නම</label>
                 <input type="text" id="name" required placeholder="ඔබේ නම මෙහි ලියන්න">
                 
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; gap: 15px;">
                     <div style="flex:1">
-                        <label>02. පදිංචි නගරය</label>
-                        <input type="text" id="city" required placeholder="ගම / නගරය">
+                        <label>🏠 පදිංචි නගරය</label>
+                        <input type="text" id="city" required placeholder="නගරය">
                     </div>
                     <div style="width: 100px;">
-                        <label>03. වයස</label>
+                        <label>🎂 වයස</label>
                         <input type="number" id="age" required>
                     </div>
                 </div>
 
-                <label>04. වට්සැප් අංකය (WhatsApp)</label>
-                <input type="tel" id="whatsapp" required placeholder="+94 7x xxx xxxx">
+                <label>📱 වට්සැප් අංකය</label>
+                <input type="tel" id="whatsapp" required placeholder="+94 7X XXX XXXX">
 
-                <label>05. අත්දැකීම් තිබේද?</label>
+                <label>💻 අත්දැකීම් තිබේද?</label>
                 <select id="exp">
-                    <option value="පළමු වතාව">නැත (පළමු වතාව)</option>
-                    <option value="පළපුරුදු">ඔව් (කලින් කණ්ඩායම් වල සිටියා)</option>
+                    <option value="නැත (පළමු වතාව)">නැත (පළමු වතාව)</option>
+                    <option value="ඔව් (Experienced)">ඔව් (පළපුරුදු)</option>
                 </select>
 
-                <label>06. ඡායාරූප 4ක් ලබා දෙන්න (Photos)</label>
+                <label>🖼️ ඡායාරූප 4ක් ලබා දෙන්න</label>
                 <div class="photo-grid">
                     <div class="photo-slot"><input type="file" accept="image/*" required></div>
                     <div class="photo-slot"><input type="file" accept="image/*" required></div>
@@ -148,8 +161,8 @@
                 <button type="submit" class="submit-btn">දත්ත යොමු කරන්න</button>
             </form>
             <div class="footer">
-                Developed by <span style="color: var(--p);">RAVIYA, SHAGIYA, ASHIYA</span><br>
-                © 2025 DARK TECH ZONE OFFICIAL
+                Developed by <span style="color: var(--primary);">RAVIYA, SHAGIYA, ASHIYA</span><br>
+                DARK TECH ZONE OFFICIAL © 2025
             </div>
         </div>
     </main>
@@ -158,51 +171,52 @@
         const logElement = document.getElementById('terminal-log');
         const terminal = document.getElementById('terminal-overlay');
 
-        // Cinematic Boot Sequence
+        // Professional Boot Sequence
         async function runBootSequence() {
             document.getElementById('welcome-screen').classList.add('slide-up');
             terminal.style.display = 'flex';
             
             const logs = [
-                "> පද්ධතිය ආරම්භ කරමින් පවතී...",
-                "> RAVIYA ACCESS GRANTED...",
-                "> SHAGIYA ACCESS GRANTED...",
-                "> ASHIYA ACCESS GRANTED...",
-                "> ආරක්ෂිත සබඳතාවය තහවුරුයි (127.0.0.1)",
-                "> දත්ත පෝරමය සූදානම් කරමින් පවතී..."
+                "> INITIALIZING SYSTEM...",
+                "> BYPASSING FIREWALL...",
+                "> RAVIYA ACCESS: GRANTED",
+                "> SHAGIYA ACCESS: GRANTED",
+                "> ASHIYA ACCESS: GRANTED",
+                "> SECURE CHANNEL: ACTIVE",
+                "> LOADING DATA INTERFACE..."
             ];
 
             for (let log of logs) {
                 logElement.innerHTML += `<p>${log}</p>`;
-                await new Promise(r => setTimeout(r, 450));
+                await new Promise(r => setTimeout(r, 400));
             }
 
             setTimeout(() => {
                 terminal.style.display = 'none';
                 document.getElementById('main-portal').classList.add('show');
+                document.body.style.overflow = "auto";
             }, 600);
         }
 
-        // WhatsApp Submission
+        // WhatsApp Submission Logic
         document.getElementById('cyberForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
-            const adminNumber = "94778430626","94788262515","94741856766";
+            const adminNumber = "94778430626";
 
-            // Submit Logs
             terminal.style.display = 'flex';
             logElement.innerHTML = "";
             const submitLogs = [
-                "> දත්ත ගොනු සකසමින් පවතී...",
-                "> ඡායාරූප 4 පද්ධතියට එක් කරමින් පවතී...",
-                "> Admin වෙත සම්බන්ධ වෙමින් පවතී ("94778430626","94788262515","94741856766")...",
-                "> දත්ත යැවීමට සූදානම්. වට්සැප් වෙත යොමු කෙරේ..."
+                "> DATA ENCRYPTION IN PROGRESS...",
+                "> UPLOADING 4 MEDIA FILES...",
+                "> CONNECTING TO DTZ HQ...",
+                "> REDIRECTING TO WHATSAPP..."
             ];
 
             for (let log of submitLogs) {
                 logElement.innerHTML += `<p style="color:white">${log}</p>`;
-                await new Promise(r => setTimeout(r, 500));
+                await new Promise(r => setTimeout(r, 600));
             }
 
             const message = `*🛡️ DTZ RECRUITMENT REPORT 🛡️*%0A%0A` +
@@ -218,4 +232,4 @@
         });
     </script>
 </body>
-</html>
+    </html>
